@@ -32,7 +32,7 @@
 
   <body>
     <header>
-      <i class="fa-solid fa-table-list">Mettimi color white</i>
+      <i class="fa-solid fa-list-check"></i>
       <!--
         Per cambiargli colore basta modificare il color: 
       
@@ -50,12 +50,12 @@
       <section id="main__left">
         <div class="left__top">
           <ul>
-            <li>
+            <li class="hover-me active">
               <i class="fa-solid fa-file-pen"></i>
               Inbox
             </li>
 
-            <li>
+            <li class="hover-me">
               <i class="fa-solid fa-calendar-day"></i>
               Today
             </li>
@@ -63,12 +63,23 @@
         </div>
 
         <div class="left__bottom">
+          <h2>Projects</h2>
+          <ul id="projects">
+            <li class="project">
+              <i class="fa-solid fa-list"></i>
+              Nome progetto a caso
+            </li>
+          </ul>
+          <!-- Anche qui sarà generato tutto automaticamente -->
           <button><i class="fas fa-plus" aria-hidden="true"></i>Add Project</button>
           <!-- <i class="fa-solid fa-list"></i> -->
         </div>
       </section>
 
-      <section id="main__right"></section>
+      <section id="main__right">
+        <!-- Qui sarà tutto generato automaticamente -->
+        <h2>Inbox</h2>
+      </section>
     </main>
 
     <footer>

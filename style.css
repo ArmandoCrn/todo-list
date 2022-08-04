@@ -1,6 +1,33 @@
 :root {
-  --main: #000;
+  --blue: #364c96;
+  --red: #ff8496;
+  --brown-0: #ffc8a3;
+
+  --white: #eaebed;
+
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+
+  --dark-0: #333;
+  --dark-1: #444;
+  --light-0: #eee;
+  --light-1: #ddd;
+  --light-2: #ccc;
 }
+
+/*========
+  GLOBAL
+========*/
 
 html {
   box-sizing: border-box;
@@ -18,3 +45,105 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+ul {
+  list-style-type: none;
+}
+
+li,
+button {
+  cursor: pointer;
+}
+
+/*============
+  TYPOGRAPHY
+============*/
+body {
+  font-family: "Lato", sans-serif;
+}
+
+header,
+footer {
+  color: var(--white);
+}
+
+.fa-list-check {
+  font-size: 2.2rem;
+}
+
+h1 {
+  font-size: 2.1rem;
+}
+
+.active {
+  font-weight: bold;
+}
+
+#main__left ul {
+  font-size: 1.125rem;
+}
+
+.fa-github {
+  color: var(--brown-0);
+}
+
+/*==========
+  SPECIFIC
+==========*/
+/*|-- Header --|*/
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+header,
+#main__left,
+#main__right {
+  padding: 0.8rem;
+}
+
+header,
+footer {
+  background-color: var(--blue);
+}
+
+/*|-- Main --|*/
+#main__left {
+  background-color: var(--light-1);
+}
+
+.active,
+.hover-me:hover,
+.project:hover {
+  background-color: var(--light-2);
+  border-radius: 10px;
+}
+
+#main__left ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#main__left ul .fa-solid {
+  margin-right: 0.4rem;
+}
+
+#main__left ul li {
+  padding: 0.6rem;
+}
+
+.left__bottom h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+#main__right {
+  background-color: var(--light-0);
+}
+
+/*==============
+  MEDIA QUERIES
+==============*/
