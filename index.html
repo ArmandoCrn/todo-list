@@ -32,22 +32,17 @@
 
   <body>
     <header>
-      <i class="fa-solid fa-list-check"></i>
-      <!--
-        Per cambiargli colore basta modificare il color: 
-      
-      <i class="fa-solid fa-square"></i>
-      <i class="fa-solid fa-square-check"></i>
+      <div>
+        <i class="fa-solid fa-list-check"></i>
+        <h1>Todo List</h1>
+      </div>
 
-      Barre per hamburger menu
-      <i class="fa-solid fa-bars"></i>
-      -->
-
-      <h1>Todo List</h1>
+      <i class="fa-solid fa-bars d-none"></i>
     </header>
 
     <main>
-      <section id="main__left">
+      <!-- FIXME: Metti il d-none qui sotto, e poi ci sarà i toggle dall'hamburger -->
+      <section id="main__left" class="">
         <div class="left__top">
           <ul>
             <li class="hover-me active">
@@ -64,21 +59,50 @@
 
         <div class="left__bottom">
           <h2>Projects</h2>
+
           <ul id="projects">
+            <!-- Anche qui in projects sarà generato tutto automaticamente,
+            quindi va cancellato tutto-->
             <li class="project">
               <i class="fa-solid fa-list"></i>
-              Nome progetto a caso
+              Nome progetto a caso (Limitane la lunghezza)
+            </li>
+
+            <li class="project">
+              <i class="fa-solid fa-list"></i>
+              Altro progetto a caso
             </li>
           </ul>
-          <!-- Anche qui sarà generato tutto automaticamente -->
-          <button><i class="fas fa-plus" aria-hidden="true"></i>Add Project</button>
-          <!-- <i class="fa-solid fa-list"></i> -->
+
+          <div class="add-project"><i class="fas fa-plus"></i>Add Project</div>
         </div>
       </section>
 
       <section id="main__right">
-        <!-- Qui sarà tutto generato automaticamente -->
         <h2>Inbox</h2>
+
+        <!-- Qui sarà tutto generato automaticamente -->
+        <ul id="tasks">
+          <!-- Anche qui in projects sarà generato tutto automaticamente,
+          quindi va cancellato tutto
+        
+          FIXME: praticamente quello che va fatto è copiare le proprietà
+          che ha la ul "projects" e metterle quasi tutte anche a questa ul
+        -->
+          <!-- <li class="task">
+            <i class="fa-solid fa-square"></i>
+            Nome Task
+          </li> -->
+        </ul>
+
+        <div class="add-task"><i class="fas fa-plus"></i>Add Task</div>
+
+        <!--
+        Per cambiargli colore basta modificare il color: 
+      <i class="fa-solid fa-square"></i>
+      <i class="fa-solid fa-square-check"></i>
+
+    -->
       </section>
     </main>
 

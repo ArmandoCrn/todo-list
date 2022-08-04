@@ -1,11 +1,16 @@
 :root {
   --blue: #364c96;
+
+  --white: #eaebed;
+  --light-0: #eee;
+  --light-1: #ddd;
+  --light-2: #ccc;
+  --gold: #ffc107;
+
   --red: #ff8496;
   --brown-0: #ffc8a3;
 
-  --white: #eaebed;
-
-  --red: #dc3545;
+  --red-s: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --green: #28a745;
@@ -13,16 +18,12 @@
   --gray: #6c757d;
   --gray-dark: #343a40;
   --success: #28a745;
-  --warning: #ffc107;
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
 
   --dark-0: #333;
   --dark-1: #444;
-  --light-0: #eee;
-  --light-1: #ddd;
-  --light-2: #ccc;
 }
 
 /*========
@@ -51,7 +52,8 @@ ul {
 }
 
 li,
-button {
+.add-project,
+.add-task {
   cursor: pointer;
 }
 
@@ -71,6 +73,10 @@ footer {
   font-size: 2.2rem;
 }
 
+.fa-bars {
+  font-size: 1.4rem;
+}
+
 h1 {
   font-size: 2.1rem;
 }
@@ -79,21 +85,44 @@ h1 {
   font-weight: bold;
 }
 
-#main__left ul {
+.left__top ul,
+.add-project,
+.add-task {
   font-size: 1.125rem;
 }
 
+.left__bottom ul {
+  font-size: 1.1rem;
+}
+
+#main__right h2 {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
 .fa-github {
-  color: var(--brown-0);
+  font-size: 1.2rem;
+  color: var(--gold);
 }
 
 /*==========
   SPECIFIC
 ==========*/
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /*|-- Header --|*/
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header div {
+  display: flex;
   align-items: center;
   gap: 1rem;
 }
@@ -101,7 +130,7 @@ header {
 header,
 #main__left,
 #main__right {
-  padding: 0.8rem;
+  padding: 1.4rem 0.8rem;
 }
 
 header,
@@ -109,14 +138,20 @@ footer {
   background-color: var(--blue);
 }
 
-/*|-- Main --|*/
+/*|-- Main-left --|*/
 #main__left {
   background-color: var(--light-1);
 }
 
+#main__left.d-none {
+  display: none;
+}
+
 .active,
 .hover-me:hover,
-.project:hover {
+.project:hover,
+.add-project:hover,
+.add-task:hover {
   background-color: var(--light-2);
   border-radius: 10px;
 }
@@ -131,8 +166,14 @@ footer {
   margin-right: 0.4rem;
 }
 
-#main__left ul li {
+.left__top ul li,
+.add-project,
+.add-task {
   padding: 0.6rem;
+}
+
+.left__bottom ul li {
+  padding: 0.4rem;
 }
 
 .left__bottom h2 {
@@ -140,10 +181,64 @@ footer {
   margin-bottom: 0.7rem;
 }
 
-#main__right {
+.project {
+  line-height: 1.4;
+}
+.fa-list {
+  vertical-align: middle;
+}
+
+.add-project .fa-plus,
+.add-task .fa-plus {
+  margin-right: 0.5rem;
+}
+
+/*|-- Main-right --|*/
+#main__right,
+body {
   background-color: var(--light-0);
+}
+
+#main__right {
+  padding-inline: 2rem;
+}
+
+/*|-- Footer --|*/
+footer {
+  margin-top: auto;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.fa-github {
+  margin-left: 0.4rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.fa-github:hover {
+  transform: scale(1.2) translateY(-5px);
 }
 
 /*==============
   MEDIA QUERIES
 ==============*/
+
+@media screen and (min-width: 650px) {
+  header .d-none {
+    display: none;
+  }
+
+  header {
+    justify-content: center;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 84.78px - 44.8px);
+  }
+
+  #main__left.d-none {
+    display: block;
+  }
+} ;
