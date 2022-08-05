@@ -80,6 +80,14 @@
             </li>
           </ul>
 
+          <form class="add-project-popup">
+            <input type="text" maxlength="40" placeholder="Project name" required />
+            <div class="buttons">
+              <button class="btn-add">Add</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </form>
+
           <div class="add-project"><i class="fas fa-plus"></i>Add Project</div>
         </div>
       </section>
@@ -95,15 +103,45 @@
 
         -->
           <li class="task">
-            <i class="fa-solid fa-square"></i>
-            Nome Task
+            <div>
+              <i class="fa-solid fa-square"></i>
+              Nome Task
+            </div>
+
+            <div class="details">
+              <p>15/12/2020</p>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash-can"></i>
+            </div>
+          </li>
+
+          <li class="task">
+            <div>
+              <i class="fa-solid fa-square"></i>
+              Nome Task molto molto molto molto lungoi
+            </div>
+
+            <div class="details">
+              <p>11/05/2020</p>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash-can"></i>
+            </div>
           </li>
         </ul>
 
+        <form class="add-task-popup">
+          <div class="inputs">
+            <input type="text" maxlength="40" placeholder="Task name" required />
+            <input type="date" required />
+          </div>
+          <div class="buttons">
+            <button class="btn-add">Add</button>
+            <button class="btn-cancel">Cancel</button>
+          </div>
+        </form>
+
         <div class="add-task"><i class="fas fa-plus"></i>Add Task</div>
         <i class="fa-solid fa-square-check"></i>
-        <i class="fa-solid fa-pen-to-square"></i>
-        <i class="fa-solid fa-trash-can"></i>
 
         <!--
         Per cambiargli colore basta modificare il color: 
