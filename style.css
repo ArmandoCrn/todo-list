@@ -57,6 +57,10 @@ li,
   cursor: pointer;
 }
 
+#main__right li {
+  cursor: default;
+}
+
 /*============
   TYPOGRAPHY
 ============*/
@@ -87,7 +91,8 @@ h1 {
 
 .left__top ul,
 .add-project,
-.add-task {
+.add-task,
+#main__right ul {
   font-size: 1.125rem;
 }
 
@@ -151,24 +156,26 @@ footer {
 .hover-me:hover,
 .project:hover,
 .add-project:hover,
+.task:hover,
 .add-task:hover {
   background-color: var(--light-2);
   border-radius: 10px;
 }
 
-#main__left ul {
+main ul {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
 
-#main__left ul .fa-solid {
+main ul .fa-solid {
   margin-right: 0.4rem;
 }
 
 .left__top ul li,
 .add-project,
-.add-task {
+.add-task,
+#main__right ul li {
   padding: 0.6rem;
 }
 
@@ -183,6 +190,9 @@ footer {
 
 .project {
   line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 .fa-list {
   vertical-align: middle;
@@ -193,6 +203,15 @@ footer {
   margin-right: 0.5rem;
 }
 
+.left__bottom .fa-trash-can {
+  display: none;
+  margin-left: 5px;
+}
+
+.left__bottom .active > .fa-trash-can {
+  display: inline;
+}
+
 /*|-- Main-right --|*/
 #main__right,
 body {
@@ -201,6 +220,11 @@ body {
 
 #main__right {
   padding-inline: 2rem;
+}
+
+.fa-square,
+.fa-square-check {
+  color: var(--blue);
 }
 
 /*|-- Footer --|*/
@@ -223,7 +247,7 @@ footer {
   MEDIA QUERIES
 ==============*/
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 660px) {
   header .d-none {
     display: none;
   }
@@ -235,7 +259,7 @@ footer {
   main {
     display: grid;
     grid-template-columns: 280px 1fr;
-    min-height: calc(100vh - 84.78px - 44.8px);
+    min-height: calc(100vh - 84.78px - 45.59px);
   }
 
   #main__left.d-none {
