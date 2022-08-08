@@ -151,6 +151,10 @@ form {
   margin-block: 1rem;
 }
 
+.d-none {
+  display: none;
+}
+
 /*|-- Header --|*/
 header {
   display: flex;
@@ -162,6 +166,10 @@ header div {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+header .d-none {
+  display: block;
 }
 
 header,
@@ -178,10 +186,6 @@ footer {
 /*|-- Main-left --|*/
 #main__left {
   background-color: var(--light-1);
-}
-
-#main__left.d-none {
-  display: none;
 }
 
 .active,
@@ -208,6 +212,11 @@ main ul .fa-solid {
 .add-task,
 #tasks li {
   padding: 0.6rem;
+}
+
+.add-project,
+.add-task {
+  margin-block: 1rem;
 }
 
 .left__bottom ul li {
@@ -252,8 +261,13 @@ main ul .fa-solid {
   gap: 0.5rem;
 }
 
+.add-project-popup.d-none,
+.add-task-popup.d-none {
+  display: none;
+}
+
 input {
-  padding: 0.6rem 0.4rem;
+  padding: 0.6rem;
   border-radius: 10px;
   border: 2px solid var(--blue);
 }
