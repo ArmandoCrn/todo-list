@@ -1,1 +1,3 @@
-console.log("hi");
+import faiCose from "./build-web";
+
+faiCose();
