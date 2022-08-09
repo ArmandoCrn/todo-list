@@ -81,7 +81,13 @@
           </ul>
 
           <form class="add-project-popup d-none">
-            <input type="text" maxlength="40" placeholder="Project name" required />
+            <input
+              id="project-name"
+              type="text"
+              maxlength="40"
+              placeholder="Project name"
+              required
+            />
             <div class="buttons">
               <button class="btn-add">Add</button>
               <button class="btn-cancel">Cancel</button>
@@ -131,8 +137,14 @@
 
         <form class="add-task-popup">
           <div class="inputs">
-            <input type="text" maxlength="40" placeholder="Task name" required />
-            <input type="date" required />
+            <input
+              id="task-name"
+              type="text"
+              maxlength="40"
+              placeholder="Task name"
+              required
+            />
+            <input id="task-date" type="date" required />
           </div>
           <div class="buttons">
             <button class="btn-add">Add</button>

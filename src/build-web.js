@@ -1,5 +1,5 @@
-import { projectCancelBtn, projectAddBtn } from "./build-mainLeft";
+import { projectInput } from "./build-mainLeft";
 
 export default function faicose() {
-  console.log(projectAddBtn);
+  console.log(projectInput);
 }
