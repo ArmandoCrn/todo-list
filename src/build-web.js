@@ -1,5 +1,5 @@
 import { projectInput } from "./build-mainLeft";
 
 export default function faicose() {
-  console.log(projectInput);
+  console.log("ciao, sono in build-web");
 }
