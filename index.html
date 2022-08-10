@@ -45,12 +45,12 @@
       <section id="main__left" class="">
         <div class="left__top">
           <ul>
-            <li class="hover-me active">
+            <li class="hover-me inbox active">
               <i class="fa-solid fa-file-pen"></i>
               Inbox
             </li>
 
-            <li class="hover-me">
+            <li class="hover-me today">
               <i class="fa-solid fa-calendar-day"></i>
               Today
             </li>
@@ -73,6 +73,7 @@
           <form class="add-project-popup d-none">
             <input
               id="project-name"
+              name="project-name"
               type="text"
               maxlength="40"
               placeholder="Project name"
@@ -80,7 +81,7 @@
             />
             <div class="buttons">
               <button class="btn-add">Add</button>
-              <button class="btn-cancel">Cancel</button>
+              <button class="btn-cancel" type="button">Cancel</button>
             </div>
           </form>
 
@@ -129,6 +130,7 @@
           <div class="inputs">
             <input
               id="task-name"
+              name="task-name"
               type="text"
               maxlength="40"
               placeholder="Task name"
@@ -138,7 +140,7 @@
           </div>
           <div class="buttons">
             <button class="btn-add">Add</button>
-            <button class="btn-cancel">Cancel</button>
+            <button class="btn-cancel" type="button">Cancel</button>
           </div>
         </form>
 
