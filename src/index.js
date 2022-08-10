@@ -1,3 +1,3 @@
-import faiCose from "./build-web";
+import buildAll from "./build-web";
 
-faiCose();
+buildAll();

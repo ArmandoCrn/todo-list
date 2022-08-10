@@ -1,5 +1,9 @@
 import { duplicateInArray } from "./build-web";
 
+const mainLeft = document.querySelector("#main__left");
+const inbox = document.querySelector(".inbox");
+const today = document.querySelector(".today");
+
 const projects = document.querySelector("#projects");
 const addProject = document.querySelector(".add-project");
 const projectPopup = document.querySelector(".add-project-popup");
@@ -19,17 +23,22 @@ class Project {
   }
 }
 
-function liClick() {
-  if (!this.className.includes("active")) {
-    this.classList.add("active");
-  }
+function addProjectPopup() {
+  const projectName = projectInput.value;
+  if (projectName) {
+    const checkDuplicate = duplicateInArray(projectName, projectList, "projectName");
 
-  const listOfLi = projects.querySelectorAll("li");
-  listOfLi.forEach((el) => {
-    if (el !== this) {
-      el.classList.remove("active");
+    if (checkDuplicate) {
+      alert("Project names must be different!");
+      setTimeout(() => openProjectPopup(), 0);
+      return;
     }
-  });
+
+    const myProject = new Project(projectName);
+
+    projectList.push(myProject);
+    createNewLi(myProject);
+  }
 }
 
 function checkForIndex(text) {
@@ -50,6 +59,11 @@ function deleteProject(e) {
   /*FIXME: occhio che quando ci saranno poi i task
   all'interno del progetto, dovranno
   essere eliminati in automatico anch'essi*/
+
+  /*TODO: Quando elimini il progetto, poi il rigth main
+  dalgi un innerText vuoto o robe così
+  altrimenti fallo andare su inbox,o boh, quel che ti pare
+  */
 }
 
 function createNewLi(name) {
@@ -71,7 +85,20 @@ function createNewLi(name) {
   projects.appendChild(li);
 }
 
-function loadProjects() {
+function liClick() {
+  if (!this.className.includes("active")) {
+    this.classList.add("active");
+  }
+
+  const listOfLi = mainLeft.querySelectorAll("li");
+  listOfLi.forEach((el) => {
+    if (el !== this) {
+      el.classList.remove("active");
+    }
+  });
+}
+
+export function loadProjects() {
   projectList.forEach((project) => {
     createNewLi(project);
   });
@@ -85,38 +112,14 @@ function openProjectPopup() {
 
 function toggleProjectPopup(e) {
   e.preventDefault();
-  this.reset();
-  cancelProjectPopup();
-}
-
-function addProjectPopup() {
-  const projectName = projectInput.value;
-  if (projectName) {
-    const checkDuplicate = duplicateInArray(projectName, projectList, "projectName");
-
-    if (checkDuplicate) {
-      alert("Project names must be different!");
-      setTimeout(() => openProjectPopup(), 0);
-      return;
-    }
-
-    const myProject = new Project(projectName);
-
-    projectList.push(myProject);
-    createNewLi(myProject);
-  }
-}
-
-function cancelProjectPopup() {
+  projectPopup.reset();
   projectPopup.classList.add("d-none");
   addProject.classList.remove("d-none");
 }
 
+inbox.addEventListener("click", liClick);
+today.addEventListener("click", liClick);
 addProject.addEventListener("click", openProjectPopup);
 projectAddBtn.addEventListener("click", addProjectPopup);
-projectCancelBtn.addEventListener("click", cancelProjectPopup);
+projectCancelBtn.addEventListener("click", toggleProjectPopup);
 projectPopup.addEventListener("submit", toggleProjectPopup);
-
-loadProjects();
-
-export { projectInput };

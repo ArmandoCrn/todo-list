@@ -239,6 +239,7 @@ main ul .fa-solid {
 .task > div {
   display: flex;
   align-items: baseline;
+  gap: 0.3rem;
 }
 
 .fa-list {
