@@ -1,3 +1,5 @@
+import { duplicateInArray } from "./build-web";
+
 const projects = document.querySelector("#projects");
 const addProject = document.querySelector(".add-project");
 const projectPopup = document.querySelector(".add-project-popup");
@@ -12,14 +14,10 @@ of the tasks list
 const projectList = [];
 
 class Project {
-  constructor(name, index) {
+  constructor(name) {
     this.projectName = name;
-    this.index = index;
   }
 }
-
-/*Take automaticly the number of the index (usefull when we use a localHost)*/
-let indexOfProject = projectList.length;
 
 function liClick() {
   if (!this.className.includes("active")) {
@@ -34,16 +32,21 @@ function liClick() {
   });
 }
 
+function checkForIndex(text) {
+  const result = projectList.findIndex((obj) => obj.projectName === text);
+  return result;
+}
+
 function deleteProject(e) {
   e.stopPropagation();
   const li = this.parentElement;
-  const index = li.dataset.index;
+  const text = li.querySelector("div > p").innerText;
+  const index = checkForIndex(text);
   projectList.splice(index, 1);
 
   projects.innerHTML = "";
   loadProjects();
 
-  console.log({ li, index });
   /*FIXME: occhio che quando ci saranno poi i task
   all'interno del progetto, dovranno
   essere eliminati in automatico anch'essi*/
@@ -52,14 +55,12 @@ function deleteProject(e) {
 function createNewLi(name) {
   const li = document.createElement("li");
   li.classList.add("project");
-  li.dataset.index = indexOfProject;
   li.innerHTML = `
   <div>
   <i class="fa-solid fa-list"></i>
-  ${name.projectName}
+  <p>${name.projectName}</p>
   </div>
   `;
-  // <i class="fa-solid fa-trash-can"></i>
 
   const i = document.createElement("i");
   i.classList.add("fa-solid", "fa-trash-can");
@@ -90,11 +91,20 @@ function toggleProjectPopup(e) {
 
 function addProjectPopup() {
   const projectName = projectInput.value;
-  const myProject = new Project(projectName, indexOfProject);
+  if (projectName) {
+    const checkDuplicate = duplicateInArray(projectName, projectList, "projectName");
 
-  projectList.push(myProject);
-  createNewLi(myProject);
-  indexOfProject++;
+    if (checkDuplicate) {
+      alert("Project names must be different!");
+      setTimeout(() => openProjectPopup(), 0);
+      return;
+    }
+
+    const myProject = new Project(projectName);
+
+    projectList.push(myProject);
+    createNewLi(myProject);
+  }
 }
 
 function cancelProjectPopup() {
