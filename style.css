@@ -235,6 +235,12 @@ main ul .fa-solid {
   align-items: baseline;
 }
 
+.project > div,
+.task > div {
+  display: flex;
+  align-items: baseline;
+}
+
 .fa-list {
   vertical-align: middle;
 }
