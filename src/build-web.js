@@ -18,8 +18,14 @@ export function duplicateInArray(text, array, objKey) {
 }
 
 function headerHamburgerMenu() {
-  const menu = document.querySelector("header fa-bars");
-  console.log(menu);
+  const menu = document.querySelector("header .fa-bars");
+  const mainLeft = document.querySelector("#main__left");
+
+  function clickHandler() {
+    mainLeft.classList.toggle("d-none");
+  }
+
+  menu.addEventListener("click", clickHandler);
 }
 
 export default function buildAll() {
