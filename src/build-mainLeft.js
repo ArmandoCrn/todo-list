@@ -1,4 +1,5 @@
 import { duplicateInArray } from "./build-web";
+import { generateInbox } from "./build-mainRight";
 
 const mainLeft = document.querySelector("#main__left");
 const inbox = document.querySelector(".inbox");
@@ -118,6 +119,7 @@ function toggleProjectPopup(e) {
 }
 
 inbox.addEventListener("click", liClick);
+inbox.addEventListener("click", generateInbox);
 today.addEventListener("click", liClick);
 addProject.addEventListener("click", openProjectPopup);
 projectAddBtn.addEventListener("click", addProjectPopup);

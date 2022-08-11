@@ -235,8 +235,8 @@ main ul .fa-solid {
   align-items: baseline;
 }
 
-.project > div,
-.task > div {
+.project > div:first-child,
+.task > div:first-child {
   display: flex;
   align-items: baseline;
   gap: 0.3rem;

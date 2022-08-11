@@ -1,4 +1,5 @@
 import { loadProjects } from "./build-mainLeft";
+import { generateInbox, generatePage, addListeners } from "./build-mainRight";
 
 /*
 FIXME: qui scriviamo le cose generali che non 
@@ -32,5 +33,8 @@ export default function buildAll() {
   headerHamburgerMenu();
 
   loadProjects();
+
+  addListeners();
+  generateInbox();
   /*FIXME: occhio poi a quando ci sarà il local host */
 }
