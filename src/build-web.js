@@ -1,5 +1,10 @@
 import { loadProjects } from "./build-mainLeft";
-import { generateInbox, generatePage, addListeners } from "./build-mainRight";
+import {
+  generateInbox,
+  generatePage,
+  addListeners,
+  loadInboxTasks,
+} from "./build-mainRight";
 
 /*
 FIXME: qui scriviamo le cose generali che non 
@@ -12,6 +17,8 @@ export function duplicateInArray(text, array, objKey) {
   array.forEach((obj) => {
     if (obj[objKey] === text) {
       result = true;
+    } else {
+      result = false;
     }
   });
 
@@ -36,5 +43,6 @@ export default function buildAll() {
 
   addListeners();
   generateInbox();
+  loadInboxTasks();
   /*FIXME: occhio poi a quando ci sarà il local host */
 }

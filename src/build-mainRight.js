@@ -17,10 +17,18 @@ class Task {
     this.taskDate = date;
     this.checked = status;
   }
+
+  setName(name) {
+    this.name = name;
+  }
+
+  setDate(date) {
+    this.date = date;
+  }
 }
 
-export function generatePage(projectName, taskList) {
-  h2.innerText = projectName;
+export function generatePage(taskName, taskList) {
+  h2.innerText = taskName;
 
   function addTaskProjects() {}
 
@@ -45,11 +53,11 @@ export function generateInbox() {
 
       const formatDate = date.split("-").reverse().join("/");
 
-      const myTast = new Task(name, formatDate, false);
+      const myTask = new Task(name, formatDate, false);
 
-      inboxTaskList.push(myTast);
+      inboxTaskList.push(myTask);
       console.log(inboxTaskList);
-      newLi(myTast);
+      newLi(myTask);
     }
   }
 
@@ -58,7 +66,47 @@ export function generateInbox() {
   taskAddBtn.addEventListener("click", addTaskInbox);
 }
 
-// occhio che si potrebbero avere problemi col localstorage
+export function loadInboxTasks() {
+  inboxTaskList.forEach((task) => {
+    newLi(task);
+  });
+}
+
+function checkIndexTask(text) {
+  const result = inboxTaskList.findIndex((obj) => obj.taskName === text);
+  return result;
+}
+
+function checkLi(obj, icon) {
+  if (obj.checked) {
+    icon.classList.remove("fa-square");
+    icon.classList.add("fa-square-check");
+  } else {
+    icon.classList.remove("fa-square-check");
+    icon.classList.add("fa-square");
+  }
+}
+
+function changeTaskStatus() {
+  const task = this.nextSibling.innerText;
+  const index = checkIndexTask(task);
+  const obj = inboxTaskList[index];
+  obj.checked = !obj.checked;
+
+  checkLi(obj, this);
+}
+
+function deleteTask() {
+  const li = this.parentElement;
+  const text = li.querySelector("div > p").innerText;
+  const index = checkIndexTask(text);
+  inboxTaskList.splice(index, 1);
+
+  tasks.innerHTML = "";
+  loadInboxTasks();
+}
+
+//TODO: occhio che si potrebbero avere problemi col localstorage
 //per l'auto checker dato che li son tutte stringhe,
 //e non so come si risolve il fatto che sia un boolean
 function newLi(obj) {
@@ -77,7 +125,7 @@ function newLi(obj) {
     iSquare.classList.add("fa-square");
   }
 
-  iSquare.addEventListener("click", () => console.log("prova"));
+  iSquare.addEventListener("click", changeTaskStatus);
 
   const pName = document.createElement("p");
   pName.innerText = `${obj.taskName}`;
@@ -98,7 +146,7 @@ function newLi(obj) {
 
   const iTrash = document.createElement("i");
   iTrash.classList.add("fa-solid", "fa-trash-can");
-  iTrash.addEventListener("click", () => console.log("prova 3"));
+  iTrash.addEventListener("click", deleteTask);
 
   details.appendChild(pDate);
   details.appendChild(iPen);
