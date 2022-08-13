@@ -1,4 +1,3 @@
-import { AsyncDependenciesBlock } from "webpack";
 import { duplicateInArray } from "./build-web";
 
 const tasks = document.querySelector("#tasks");
@@ -20,19 +19,19 @@ class Task {
   }
 
   setName(name) {
-    this.name = name;
+    this.taskName = name;
   }
 
   getName() {
-    return this.name;
+    return this.taskName;
   }
 
   setDate(date) {
-    this.date = date;
+    this.taskDate = date;
   }
 
   getDate() {
-    return this.date;
+    return this.taskDate;
   }
 }
 
@@ -105,26 +104,27 @@ function changeTaskStatus() {
 }
 
 function deleteTask() {
-  // const li = this.parentElement.parentElement;
+  const li = this.parentElement.parentElement;
   const text = li.querySelector(".name-task > p").innerText;
   const index = checkIndexTask(text);
   inboxTaskList.splice(index, 1);
 
   tasks.innerHTML = "";
   loadInboxTasks();
-
-  console.log(text);
-  console.log(li);
 }
 
 function modTask() {
-  // const li = this.parentElement.parentElement;
+  const li = this.parentElement.parentElement;
   const text = li.querySelector(".name-task > p").innerText;
   const index = checkIndexTask(text);
   const obj = inboxTaskList[index];
 
-  // console.log(index);
-  // console.log(obj);
+  const name = obj.getName();
+  const date = obj.getDate();
+
+  /*FIXME: qui poppano fuori i campi imput e come value
+  avranno name e date qui sopra
+  */
 }
 
 //TODO: occhio che si potrebbero avere problemi col localstorage
