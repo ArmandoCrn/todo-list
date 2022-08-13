@@ -1,3 +1,4 @@
+import { AsyncDependenciesBlock } from "webpack";
 import { duplicateInArray } from "./build-web";
 
 const tasks = document.querySelector("#tasks");
@@ -22,8 +23,16 @@ class Task {
     this.name = name;
   }
 
+  getName() {
+    return this.name;
+  }
+
   setDate(date) {
     this.date = date;
+  }
+
+  getDate() {
+    return this.date;
   }
 }
 
@@ -56,7 +65,6 @@ export function generateInbox() {
       const myTask = new Task(name, formatDate, false);
 
       inboxTaskList.push(myTask);
-      console.log(inboxTaskList);
       newLi(myTask);
     }
   }
@@ -97,13 +105,26 @@ function changeTaskStatus() {
 }
 
 function deleteTask() {
-  const li = this.parentElement;
-  const text = li.querySelector("div > p").innerText;
+  // const li = this.parentElement.parentElement;
+  const text = li.querySelector(".name-task > p").innerText;
   const index = checkIndexTask(text);
   inboxTaskList.splice(index, 1);
 
   tasks.innerHTML = "";
   loadInboxTasks();
+
+  console.log(text);
+  console.log(li);
+}
+
+function modTask() {
+  // const li = this.parentElement.parentElement;
+  const text = li.querySelector(".name-task > p").innerText;
+  const index = checkIndexTask(text);
+  const obj = inboxTaskList[index];
+
+  // console.log(index);
+  // console.log(obj);
 }
 
 //TODO: occhio che si potrebbero avere problemi col localstorage
@@ -114,6 +135,7 @@ function newLi(obj) {
   li.classList.add("task");
 
   const div = document.createElement("div");
+  div.classList.add("name-task");
 
   const iSquare = document.createElement("i");
   iSquare.classList.add("fa-solid");
@@ -142,7 +164,7 @@ function newLi(obj) {
 
   const iPen = document.createElement("i");
   iPen.classList.add("fa-solid", "fa-pen-to-square");
-  iPen.addEventListener("click", () => console.log("prova 2"));
+  iPen.addEventListener("click", modTask);
 
   const iTrash = document.createElement("i");
   iTrash.classList.add("fa-solid", "fa-trash-can");
