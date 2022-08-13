@@ -261,7 +261,8 @@ main ul .fa-solid {
 }
 
 .add-project-popup,
-.add-task-popup {
+.add-task-popup,
+.mod-task-popup {
   display: flex;
   flex-direction: column;
   padding: 0.6rem;
@@ -269,7 +270,8 @@ main ul .fa-solid {
 }
 
 .add-project-popup.d-none,
-.add-task-popup.d-none {
+.add-task-popup.d-none,
+.mod-task-popup.d-none {
   display: none;
 }
 

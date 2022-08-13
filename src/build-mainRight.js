@@ -4,12 +4,18 @@ const tasks = document.querySelector("#tasks");
 const h2 = document.querySelector("#main__right > h2");
 const addTask = document.querySelector(".add-task");
 const taskPopup = document.querySelector(".add-task-popup");
+const modTaskPopup = document.querySelector(".mod-task-popup");
 const taskCancelBtn = document.querySelector(".add-task-popup .btn-cancel");
+const modTaskCancelBtn = document.querySelector(".mod-task-popup .btn-cancel");
 const taskAddBtn = document.querySelector(".add-task-popup .btn-add");
+const modTaskAddBtn = document.querySelector(".mod-task-popup .btn-add");
 const taskName = document.querySelector("#task-name");
+const modTaskName = document.querySelector("#task-name-mod");
 const taskDate = document.querySelector("#task-date");
+const modTaskDate = document.querySelector("#task-date-mod");
 
 const inboxTaskList = [];
+let modObj;
 
 class Task {
   constructor(name, date, status) {
@@ -71,6 +77,7 @@ export function generateInbox() {
   // FIXME: bisogna trovare un modo per rimuovere l'event listener dei project
   // taskAddBtn.removeEventListener("click", addTaskProjects);
   taskAddBtn.addEventListener("click", addTaskInbox);
+  modTaskAddBtn.addEventListener("click", modTaskEditBtn);
 }
 
 export function loadInboxTasks() {
@@ -119,12 +126,40 @@ function modTask() {
   const index = checkIndexTask(text);
   const obj = inboxTaskList[index];
 
+  modObj = obj;
+
   const name = obj.getName();
   const date = obj.getDate();
+
+  const formatDate = date.split("/").reverse().join("-");
+
+  openModTaskPopup();
+
+  modTaskName.value = name;
+  modTaskDate.value = formatDate;
 
   /*FIXME: qui poppano fuori i campi imput e come value
   avranno name e date qui sopra
   */
+}
+
+function modTaskEditBtn(obj) {
+  const name = modTaskName.value;
+  const date = modTaskDate.value;
+
+  const formatDate = date.split("-").reverse().join("/");
+
+  // const binded = obj.bind(Task);
+  // obj = obj.bind(Task);
+  // console.log(binded);
+  //FIXME: trovare il modo di fixare il bind di this
+  // Non ho capito come fare
+
+  obj.setName(name);
+  obj.setDate(formatDate);
+
+  tasks.innerHTML = "";
+  loadInboxTasks();
 }
 
 //TODO: occhio che si potrebbero avere problemi col localstorage
@@ -182,6 +217,9 @@ export function addListeners() {
   addTask.addEventListener("click", openTaskPopup);
   taskCancelBtn.addEventListener("click", toggleTaskPopup);
   taskPopup.addEventListener("submit", toggleTaskPopup);
+
+  modTaskCancelBtn.addEventListener("click", toggleModTaskPopup);
+  modTaskPopup.addEventListener("submit", toggleModTaskPopup);
 }
 
 function openTaskPopup() {
@@ -190,9 +228,20 @@ function openTaskPopup() {
   setTimeout(() => taskName.focus(), 100);
 }
 
+function openModTaskPopup() {
+  modTaskPopup.classList.remove("d-none");
+  setTimeout(() => modTaskName.focus(), 100);
+}
+
 function toggleTaskPopup(e) {
   e.preventDefault();
   taskPopup.reset();
   taskPopup.classList.add("d-none");
   addTask.classList.remove("d-none");
+}
+
+function toggleModTaskPopup(e) {
+  e.preventDefault();
+  modTaskPopup.reset();
+  modTaskPopup.classList.add("d-none");
 }

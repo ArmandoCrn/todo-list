@@ -91,9 +91,27 @@
       <section id="main__right">
         <h2></h2>
 
+        <form class="mod-task-popup d-none">
+          <div class="inputs">
+            <input
+              id="task-name-mod"
+              name="task-name"
+              type="text"
+              maxlength="40"
+              placeholder="Task name"
+              required
+            />
+            <input id="task-date-mod" type="date" required />
+          </div>
+          <div class="buttons">
+            <button class="btn-add">Edit</button>
+            <button class="btn-cancel" type="button">Cancel</button>
+          </div>
+        </form>
+
         <ul id="tasks">
           <!-- <li class="task">
-            <div>
+            <div class="name-task">
               <i class="fa-solid fa-square"></i>
               <p>Nome Task</p>
             </div>
