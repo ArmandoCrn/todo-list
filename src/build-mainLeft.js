@@ -1,5 +1,11 @@
 import { duplicateInArray } from "./build-web";
-import { generateInbox } from "./build-mainRight";
+import {
+  generateInbox,
+  generatePage,
+  removeHandlerInbox,
+  removeHandlerProject,
+  loadInboxTasks,
+} from "./build-mainRight";
 
 const mainLeft = document.querySelector("#main__left");
 const inbox = document.querySelector(".inbox");
@@ -21,6 +27,19 @@ const projectList = [];
 class Project {
   constructor(name) {
     this.projectName = name;
+    this.taskList = [];
+  }
+
+  addTask(task) {
+    this.taskList.push(task);
+  }
+
+  getList() {
+    return this.taskList;
+  }
+
+  getObj() {
+    return this;
   }
 }
 
@@ -83,6 +102,7 @@ function createNewLi(name) {
   li.appendChild(i);
 
   li.addEventListener("click", liClick);
+  li.addEventListener("click", () => generatePage(name));
   projects.appendChild(li);
 }
 
@@ -120,6 +140,8 @@ function toggleProjectPopup(e) {
 
 inbox.addEventListener("click", liClick);
 inbox.addEventListener("click", generateInbox);
+inbox.addEventListener("click", removeHandlerProject);
+inbox.addEventListener("click", loadInboxTasks);
 today.addEventListener("click", liClick);
 addProject.addEventListener("click", openProjectPopup);
 projectAddBtn.addEventListener("click", addProjectPopup);

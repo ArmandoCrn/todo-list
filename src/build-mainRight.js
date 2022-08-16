@@ -16,6 +16,7 @@ const modTaskDate = document.querySelector("#task-date-mod");
 
 const inboxTaskList = [];
 let modObj;
+let currentProj;
 
 class Task {
   constructor(name, date, status) {
@@ -41,43 +42,83 @@ class Task {
   }
 }
 
-export function generatePage(taskName, taskList) {
-  h2.innerText = taskName;
+function setCurrentProj(proj) {
+  currentProj = proj;
+}
 
-  function addTaskProjects() {}
+export function generatePage(project) {
+  h2.innerText = project.projectName;
 
-  console.log(mainRight);
+  currentProj = project;
+
+  tasks.innerHTML = "";
+  loadProjectTasks();
+
+  removeHandlerInbox();
+  removeHandlerProject();
+  taskAddBtn.addEventListener("click", () => addTaskProject(project));
+  // modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
+}
+
+function addTaskProject(proj) {
+  const name = taskName.value;
+  const date = taskDate.value;
+  const array = proj.getList();
+
+  if (name && date) {
+    const checkDuplicate = duplicateInArray(name, array, "taskName");
+
+    if (checkDuplicate) {
+      alert("Task names must be different!");
+      setTimeout(() => openTaskPopup(), 0);
+      return;
+    }
+
+    const formatDate = date.split("-").reverse().join("/");
+
+    const myTask = new Task(name, formatDate, false);
+
+    proj.addTask(myTask);
+    console.log(proj.getObj());
+    newLiForProject(myTask);
+  }
 }
 
 export function generateInbox() {
   h2.innerText = "Inbox";
 
-  function addTaskInbox() {
-    const name = taskName.value;
-    const date = taskDate.value;
-
-    if (name && date) {
-      const checkDuplicate = duplicateInArray(name, inboxTaskList, "taskName");
-
-      if (checkDuplicate) {
-        alert("Task names must be different!");
-        setTimeout(() => openTaskPopup(), 0);
-        return;
-      }
-
-      const formatDate = date.split("-").reverse().join("/");
-
-      const myTask = new Task(name, formatDate, false);
-
-      inboxTaskList.push(myTask);
-      newLi(myTask);
-    }
-  }
-
-  // FIXME: bisogna trovare un modo per rimuovere l'event listener dei project
-  // taskAddBtn.removeEventListener("click", addTaskProjects);
   taskAddBtn.addEventListener("click", addTaskInbox);
   modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
+}
+
+function addTaskInbox() {
+  const name = taskName.value;
+  const date = taskDate.value;
+
+  if (name && date) {
+    const checkDuplicate = duplicateInArray(name, inboxTaskList, "taskName");
+
+    if (checkDuplicate) {
+      alert("Task names must be different!");
+      setTimeout(() => openTaskPopup(), 0);
+      return;
+    }
+
+    const formatDate = date.split("-").reverse().join("/");
+
+    const myTask = new Task(name, formatDate, false);
+
+    inboxTaskList.push(myTask);
+    newLi(myTask);
+  }
+}
+
+export function removeHandlerInbox() {
+  taskAddBtn.removeEventListener("click", addTaskInbox);
+}
+
+export function removeHandlerProject() {
+  taskAddBtn.removeEventListener("click", addTaskProject);
 }
 
 export function loadInboxTasks() {
@@ -86,8 +127,19 @@ export function loadInboxTasks() {
   });
 }
 
+function loadProjectTasks() {
+  currentProj.getList().forEach((task) => {
+    newLiForProject(task);
+  });
+}
+
 function checkIndexTask(text) {
   const result = inboxTaskList.findIndex((obj) => obj.taskName === text);
+  return result;
+}
+
+function checkProjectTask(text) {
+  const result = currentProj.getList().findIndex((obj) => obj.taskName === text);
   return result;
 }
 
@@ -110,6 +162,15 @@ function changeTaskStatus() {
   checkLi(obj, this);
 }
 
+function changeTaskProjectStatus() {
+  const task = this.nextSibling.innerText;
+  const index = checkProjectTask(task);
+  const obj = currentProj.getList()[index];
+  obj.checked = !obj.checked;
+
+  checkLi(obj, this);
+}
+
 function deleteTask() {
   const li = this.parentElement.parentElement;
   const text = li.querySelector(".name-task > p").innerText;
@@ -118,6 +179,16 @@ function deleteTask() {
 
   tasks.innerHTML = "";
   loadInboxTasks();
+}
+
+function deleteTaskProject() {
+  const li = this.parentElement.parentElement;
+  const text = li.querySelector(".name-task > p").innerText;
+  const index = checkProjectTask(text);
+  currentProj.getList().splice(index, 1);
+
+  tasks.innerHTML = "";
+  loadProjectTasks();
 }
 
 function modTask() {
@@ -137,10 +208,6 @@ function modTask() {
 
   modTaskName.value = name;
   modTaskDate.value = formatDate;
-
-  /*FIXME: qui poppano fuori i campi imput e come value
-  avranno name e date qui sopra
-  */
 }
 
 function modTaskEditBtn(obj) {
@@ -198,6 +265,54 @@ function newLi(obj) {
   const iTrash = document.createElement("i");
   iTrash.classList.add("fa-solid", "fa-trash-can");
   iTrash.addEventListener("click", deleteTask);
+
+  details.appendChild(pDate);
+  details.appendChild(iPen);
+  details.appendChild(iTrash);
+  li.appendChild(details);
+
+  tasks.appendChild(li);
+}
+
+function newLiForProject(obj) {
+  const li = document.createElement("li");
+  li.classList.add("task");
+
+  const div = document.createElement("div");
+  div.classList.add("name-task");
+
+  const iSquare = document.createElement("i");
+  iSquare.classList.add("fa-solid");
+
+  //auto-checker when we recraite the li from LocalStorage
+  if (obj.checked) {
+    iSquare.classList.add("fa-square-check");
+  } else {
+    iSquare.classList.add("fa-square");
+  }
+
+  iSquare.addEventListener("click", changeTaskProjectStatus);
+
+  const pName = document.createElement("p");
+  pName.innerText = `${obj.taskName}`;
+
+  div.appendChild(iSquare);
+  div.appendChild(pName);
+  li.appendChild(div);
+
+  const details = document.createElement("div");
+  details.classList.add("details");
+
+  const pDate = document.createElement("p");
+  pDate.innerText = `${obj.taskDate}`;
+
+  const iPen = document.createElement("i");
+  iPen.classList.add("fa-solid", "fa-pen-to-square");
+  iPen.addEventListener("click", modTask);
+
+  const iTrash = document.createElement("i");
+  iTrash.classList.add("fa-solid", "fa-trash-can");
+  iTrash.addEventListener("click", deleteTaskProject);
 
   details.appendChild(pDate);
   details.appendChild(iPen);
