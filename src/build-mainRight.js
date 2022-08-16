@@ -42,27 +42,26 @@ class Task {
   }
 }
 
-function setCurrentProj(proj) {
+export function setCurrentProj(proj) {
   currentProj = proj;
 }
 
-export function generatePage(project) {
-  h2.innerText = project.projectName;
-
-  currentProj = project;
+export function generatePage() {
+  h2.innerText = currentProj.projectName;
 
   tasks.innerHTML = "";
   loadProjectTasks();
 
   removeHandlerInbox();
   removeHandlerProject();
-  taskAddBtn.addEventListener("click", () => addTaskProject(project));
+  taskAddBtn.addEventListener("click", addTaskProject);
   // modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
 }
 
-function addTaskProject(proj) {
+function addTaskProject() {
   const name = taskName.value;
   const date = taskDate.value;
+  const proj = currentProj;
   const array = proj.getList();
 
   if (name && date) {

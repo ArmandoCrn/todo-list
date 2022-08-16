@@ -5,6 +5,7 @@ import {
   removeHandlerInbox,
   removeHandlerProject,
   loadInboxTasks,
+  setCurrentProj,
 } from "./build-mainRight";
 
 const mainLeft = document.querySelector("#main__left");
@@ -102,7 +103,8 @@ function createNewLi(name) {
   li.appendChild(i);
 
   li.addEventListener("click", liClick);
-  li.addEventListener("click", () => generatePage(name));
+  li.addEventListener("click", () => setCurrentProj(name));
+  li.addEventListener("click", generatePage);
   projects.appendChild(li);
 }
 
