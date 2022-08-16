@@ -5,7 +5,9 @@ import {
   removeHandlerInbox,
   removeHandlerProject,
   loadInboxTasks,
+  loadProjectTasks,
   setCurrentProj,
+  deleteProjectRigth,
 } from "./build-mainRight";
 
 const mainLeft = document.querySelector("#main__left");
@@ -76,6 +78,7 @@ function deleteProject(e) {
 
   projects.innerHTML = "";
   loadProjects();
+  deleteProjectRigth();
 
   /*FIXME: occhio che quando ci saranno poi i task
   all'interno del progetto, dovranno

@@ -112,12 +112,24 @@ function addTaskInbox() {
   }
 }
 
+export function deleteProjectRigth() {
+  h2.innerText = "";
+  removeHandlerInbox();
+  removeHandlerProject();
+}
+
 export function removeHandlerInbox() {
   taskAddBtn.removeEventListener("click", addTaskInbox);
+  //FIXME: bisogna levarlo anche al edit cosetto
+  //ma qui la questione si complica, dato che
+  // ho usato () => nomeFunzione, quindi è un bel casotto
 }
 
 export function removeHandlerProject() {
   taskAddBtn.removeEventListener("click", addTaskProject);
+  //FIXME: bisogna levarlo anche al edit cosetto
+  //ma qui la questione si complica, dato che
+  // ho usato () => nomeFunzione, quindi è un bel casotto
 }
 
 export function loadInboxTasks() {
@@ -126,7 +138,7 @@ export function loadInboxTasks() {
   });
 }
 
-function loadProjectTasks() {
+export function loadProjectTasks() {
   currentProj.getList().forEach((task) => {
     newLiForProject(task);
   });
