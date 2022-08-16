@@ -77,7 +77,7 @@ export function generateInbox() {
   // FIXME: bisogna trovare un modo per rimuovere l'event listener dei project
   // taskAddBtn.removeEventListener("click", addTaskProjects);
   taskAddBtn.addEventListener("click", addTaskInbox);
-  modTaskAddBtn.addEventListener("click", modTaskEditBtn);
+  modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
 }
 
 export function loadInboxTasks() {
@@ -148,12 +148,6 @@ function modTaskEditBtn(obj) {
   const date = modTaskDate.value;
 
   const formatDate = date.split("-").reverse().join("/");
-
-  // const binded = obj.bind(Task);
-  // obj = obj.bind(Task);
-  // console.log(binded);
-  //FIXME: trovare il modo di fixare il bind di this
-  // Non ho capito come fare
 
   obj.setName(name);
   obj.setDate(formatDate);
