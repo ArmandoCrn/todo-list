@@ -1,7 +1,9 @@
 import { duplicateInArray } from "./build-web";
 
 const tasks = document.querySelector("#tasks");
+
 const h2 = document.querySelector("#main__right > h2");
+
 const addTask = document.querySelector(".add-task");
 const taskPopup = document.querySelector(".add-task-popup");
 const modTaskPopup = document.querySelector(".mod-task-popup");
@@ -55,7 +57,7 @@ export function generatePage() {
   removeHandlerInbox();
   removeHandlerProject();
   taskAddBtn.addEventListener("click", addTaskProject);
-  // modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
+  modTaskAddBtn.addEventListener("click", modTaskEditBtnProjects);
 }
 
 function addTaskProject() {
@@ -78,7 +80,6 @@ function addTaskProject() {
     const myTask = new Task(name, formatDate, false);
 
     proj.addTask(myTask);
-    console.log(proj.getObj());
     newLiForProject(myTask);
   }
 }
@@ -87,7 +88,7 @@ export function generateInbox() {
   h2.innerText = "Inbox";
 
   taskAddBtn.addEventListener("click", addTaskInbox);
-  modTaskAddBtn.addEventListener("click", () => modTaskEditBtn(modObj));
+  modTaskAddBtn.addEventListener("click", modTaskEditBtn);
 }
 
 function addTaskInbox() {
@@ -120,25 +121,25 @@ export function deleteProjectRigth() {
 
 export function removeHandlerInbox() {
   taskAddBtn.removeEventListener("click", addTaskInbox);
-  //FIXME: bisogna levarlo anche al edit cosetto
-  //ma qui la questione si complica, dato che
-  // ho usato () => nomeFunzione, quindi è un bel casotto
+  modTaskAddBtn.removeEventListener("click", modTaskEditBtn);
 }
 
 export function removeHandlerProject() {
   taskAddBtn.removeEventListener("click", addTaskProject);
-  //FIXME: bisogna levarlo anche al edit cosetto
-  //ma qui la questione si complica, dato che
-  // ho usato () => nomeFunzione, quindi è un bel casotto
+  modTaskAddBtn.removeEventListener("click", modTaskEditBtnProjects);
 }
 
 export function loadInboxTasks() {
+  tasks.innerHTML = "";
+
   inboxTaskList.forEach((task) => {
     newLi(task);
   });
 }
 
 export function loadProjectTasks() {
+  tasks.innerHTML = "";
+
   currentProj.getList().forEach((task) => {
     newLiForProject(task);
   });
@@ -221,17 +222,49 @@ function modTask() {
   modTaskDate.value = formatDate;
 }
 
-function modTaskEditBtn(obj) {
+function modTaskProjects() {
+  const li = this.parentElement.parentElement;
+  const text = li.querySelector(".name-task > p").innerText;
+  const index = checkProjectTask(text);
+  const obj = currentProj.getList()[index];
+
+  modObj = obj;
+
+  const name = obj.getName();
+  const date = obj.getDate();
+
+  const formatDate = date.split("/").reverse().join("-");
+
+  openModTaskPopup();
+
+  modTaskName.value = name;
+  modTaskDate.value = formatDate;
+}
+
+function modTaskEditBtn() {
   const name = modTaskName.value;
   const date = modTaskDate.value;
 
   const formatDate = date.split("-").reverse().join("/");
 
-  obj.setName(name);
-  obj.setDate(formatDate);
+  modObj.setName(name);
+  modObj.setDate(formatDate);
 
   tasks.innerHTML = "";
   loadInboxTasks();
+}
+
+function modTaskEditBtnProjects() {
+  const name = modTaskName.value;
+  const date = modTaskDate.value;
+
+  const formatDate = date.split("-").reverse().join("/");
+
+  modObj.setName(name);
+  modObj.setDate(formatDate);
+
+  tasks.innerHTML = "";
+  loadProjectTasks();
 }
 
 //TODO: occhio che si potrebbero avere problemi col localstorage
@@ -319,7 +352,7 @@ function newLiForProject(obj) {
 
   const iPen = document.createElement("i");
   iPen.classList.add("fa-solid", "fa-pen-to-square");
-  iPen.addEventListener("click", modTask);
+  iPen.addEventListener("click", modTaskProjects);
 
   const iTrash = document.createElement("i");
   iTrash.classList.add("fa-solid", "fa-trash-can");

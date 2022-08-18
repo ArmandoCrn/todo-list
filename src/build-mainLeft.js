@@ -15,6 +15,7 @@ const inbox = document.querySelector(".inbox");
 const today = document.querySelector(".today");
 
 const projects = document.querySelector("#projects");
+const tasks = document.querySelector("#tasks");
 const addProject = document.querySelector(".add-project");
 const projectPopup = document.querySelector(".add-project-popup");
 const projectCancelBtn = document.querySelector(".add-project-popup .btn-cancel");
@@ -77,6 +78,7 @@ function deleteProject(e) {
   projectList.splice(index, 1);
 
   projects.innerHTML = "";
+  tasks.innerHTML = "";
   loadProjects();
   deleteProjectRigth();
 
@@ -147,7 +149,9 @@ inbox.addEventListener("click", liClick);
 inbox.addEventListener("click", generateInbox);
 inbox.addEventListener("click", removeHandlerProject);
 inbox.addEventListener("click", loadInboxTasks);
+
 today.addEventListener("click", liClick);
+
 addProject.addEventListener("click", openProjectPopup);
 projectAddBtn.addEventListener("click", addProjectPopup);
 projectCancelBtn.addEventListener("click", toggleProjectPopup);
