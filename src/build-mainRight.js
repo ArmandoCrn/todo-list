@@ -1,4 +1,4 @@
-import { duplicateInArray } from "./build-web";
+import { duplicateInArray, putDNone, removeDNone } from "./build-web";
 
 const tasks = document.querySelector("#tasks");
 
@@ -16,15 +16,17 @@ const modTaskName = document.querySelector("#task-name-mod");
 const taskDate = document.querySelector("#task-date");
 const modTaskDate = document.querySelector("#task-date-mod");
 
-const inboxTaskList = [];
+export const inboxTaskList = [];
+
 let modObj;
 let currentProj;
 
 class Task {
-  constructor(name, date, status) {
+  constructor(name, date, status, proj) {
     this.taskName = name;
     this.taskDate = date;
     this.checked = status;
+    this.from = proj;
   }
 
   setName(name) {
@@ -56,6 +58,7 @@ export function generatePage() {
 
   removeHandlerInbox();
   removeHandlerProject();
+  removeDNone(addTask);
   taskAddBtn.addEventListener("click", addTaskProject);
   modTaskAddBtn.addEventListener("click", modTaskEditBtnProjects);
 }
@@ -64,6 +67,7 @@ function addTaskProject() {
   const name = taskName.value;
   const date = taskDate.value;
   const proj = currentProj;
+  const objName = currentProj.getProjName();
   const array = proj.getList();
 
   if (name && date) {
@@ -77,16 +81,19 @@ function addTaskProject() {
 
     const formatDate = date.split("-").reverse().join("/");
 
-    const myTask = new Task(name, formatDate, false);
+    const myTask = new Task(name, formatDate, false, objName);
 
     proj.addTask(myTask);
     newLiForProject(myTask);
+
+    console.log(proj);
   }
 }
 
 export function generateInbox() {
   h2.innerText = "Inbox";
 
+  removeDNone(addTask);
   taskAddBtn.addEventListener("click", addTaskInbox);
   modTaskAddBtn.addEventListener("click", modTaskEditBtn);
 }
@@ -106,17 +113,18 @@ function addTaskInbox() {
 
     const formatDate = date.split("-").reverse().join("/");
 
-    const myTask = new Task(name, formatDate, false);
+    const myTask = new Task(name, formatDate, false, "Inbox");
 
     inboxTaskList.push(myTask);
     newLi(myTask);
+
+    console.log(inboxTaskList);
   }
 }
 
 export function deleteProjectRigth() {
   h2.innerText = "";
-  removeHandlerInbox();
-  removeHandlerProject();
+  putDNone(addTask);
 }
 
 export function removeHandlerInbox() {

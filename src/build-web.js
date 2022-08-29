@@ -12,6 +12,14 @@ vanno nei moduli specifici, come per esempio questa sotto
 per esempio dobbiamo aggiungere il coso per l'hamburger menu
 */
 
+export function putDNone(element) {
+  element.classList.add("d-none");
+}
+
+export function removeDNone(element) {
+  element.classList.remove("d-none");
+}
+
 export function duplicateInArray(text, array, objKey) {
   let result;
   array.forEach((obj) => {

@@ -1,4 +1,5 @@
 import { duplicateInArray } from "./build-web";
+import generateToday from "./today";
 import {
   generateInbox,
   generatePage,
@@ -26,7 +27,7 @@ const projectInput = document.querySelector("#project-name");
 Use the obj.projectName as a "key" for load the page 
 of the tasks list
 */
-const projectList = [];
+export const projectList = [];
 
 class Project {
   constructor(name) {
@@ -36,6 +37,10 @@ class Project {
 
   addTask(task) {
     this.taskList.push(task);
+  }
+
+  getProjName() {
+    return this.projectName;
   }
 
   getList() {
@@ -75,7 +80,8 @@ function deleteProject(e) {
   const li = this.parentElement;
   const text = li.querySelector("div > p").innerText;
   const index = checkForIndex(text);
-  projectList.splice(index, 1);
+  const trash = projectList.splice(index, 1);
+  delete trash[0];
 
   projects.innerHTML = "";
   tasks.innerHTML = "";
@@ -151,6 +157,7 @@ inbox.addEventListener("click", removeHandlerProject);
 inbox.addEventListener("click", loadInboxTasks);
 
 today.addEventListener("click", liClick);
+today.addEventListener("click", generateToday);
 
 addProject.addEventListener("click", openProjectPopup);
 projectAddBtn.addEventListener("click", addProjectPopup);
