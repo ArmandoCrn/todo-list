@@ -119,6 +119,10 @@ input {
   font-size: 1.8rem;
 }
 
+#main__right .today-from {
+  font-size: 0.8rem;
+}
+
 .fa-github {
   font-size: 1.2rem;
   color: var(--gold);
