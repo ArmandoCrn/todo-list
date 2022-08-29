@@ -85,8 +85,6 @@ function addTaskProject() {
 
     proj.addTask(myTask);
     newLiForProject(myTask);
-
-    console.log(proj);
   }
 }
 
@@ -117,8 +115,6 @@ function addTaskInbox() {
 
     inboxTaskList.push(myTask);
     newLi(myTask);
-
-    console.log(inboxTaskList);
   }
 }
 
@@ -216,7 +212,6 @@ function modTask() {
   const text = li.querySelector(".name-task > p").innerText;
   const index = checkIndexTask(text);
   const obj = inboxTaskList[index];
-
   modObj = obj;
 
   const name = obj.getName();
@@ -275,9 +270,6 @@ function modTaskEditBtnProjects() {
   loadProjectTasks();
 }
 
-//TODO: occhio che si potrebbero avere problemi col localstorage
-//per l'auto checker dato che li son tutte stringhe,
-//e non so come si risolve il fatto che sia un boolean
 function newLi(obj) {
   const li = document.createElement("li");
   li.classList.add("task");
@@ -288,7 +280,7 @@ function newLi(obj) {
   const iSquare = document.createElement("i");
   iSquare.classList.add("fa-solid");
 
-  //auto-checker when we recraite the li from LocalStorage
+  //auto-checker
   if (obj.checked) {
     iSquare.classList.add("fa-square-check");
   } else {
@@ -336,7 +328,7 @@ function newLiForProject(obj) {
   const iSquare = document.createElement("i");
   iSquare.classList.add("fa-solid");
 
-  //auto-checker when we recraite the li from LocalStorage
+  //auto-checker
   if (obj.checked) {
     iSquare.classList.add("fa-square-check");
   } else {

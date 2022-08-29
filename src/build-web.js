@@ -6,12 +6,6 @@ import {
   loadInboxTasks,
 } from "./build-mainRight";
 
-/*
-FIXME: qui scriviamo le cose generali che non 
-vanno nei moduli specifici, come per esempio questa sotto
-per esempio dobbiamo aggiungere il coso per l'hamburger menu
-*/
-
 export function putDNone(element) {
   element.classList.add("d-none");
 }
@@ -52,5 +46,4 @@ export default function buildAll() {
   addListeners();
   generateInbox();
   loadInboxTasks();
-  /*FIXME: occhio poi a quando ci sarà il local host */
 }
