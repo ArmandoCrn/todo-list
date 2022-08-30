@@ -1,4 +1,5 @@
 import { duplicateInArray, putDNone, removeDNone } from "./build-web";
+import { projectList } from "./build-mainLeft";
 
 const tasks = document.querySelector("#tasks");
 
@@ -16,12 +17,10 @@ const modTaskName = document.querySelector("#task-name-mod");
 const taskDate = document.querySelector("#task-date");
 const modTaskDate = document.querySelector("#task-date-mod");
 
-export const inboxTaskList = [];
-
 let modObj;
 let currentProj;
 
-class Task {
+export class Task {
   constructor(name, date, status, proj) {
     this.taskName = name;
     this.taskDate = date;
@@ -44,6 +43,23 @@ class Task {
   getDate() {
     return this.taskDate;
   }
+}
+
+export const inboxTaskList = existLocalStorageInbox();
+
+/*
+This is for change of inbox tasks in new tasks when they are inthe localStorage 
+*/
+function existLocalStorageInbox() {
+  let check = JSON.parse(localStorage.getItem("inboxTaskList")) ?? [];
+
+  if (localStorage.hasOwnProperty("inboxTaskList") && check !== []) {
+    check = JSON.parse(localStorage.getItem("inboxTaskList")).map((task) =>
+      Object.assign(new Task(), task)
+    );
+  }
+
+  return check;
 }
 
 export function setCurrentProj(proj) {
@@ -85,6 +101,7 @@ function addTaskProject() {
 
     proj.addTask(myTask);
     newLiForProject(myTask);
+    localStorage.setItem("projectList", JSON.stringify(projectList));
   }
 }
 
@@ -115,6 +132,7 @@ function addTaskInbox() {
 
     inboxTaskList.push(myTask);
     newLi(myTask);
+    localStorage.setItem("inboxTaskList", JSON.stringify(inboxTaskList));
   }
 }
 
@@ -139,6 +157,8 @@ export function loadInboxTasks() {
   inboxTaskList.forEach((task) => {
     newLi(task);
   });
+
+  localStorage.setItem("inboxTaskList", JSON.stringify(inboxTaskList));
 }
 
 export function loadProjectTasks() {
@@ -147,6 +167,8 @@ export function loadProjectTasks() {
   currentProj.getList().forEach((task) => {
     newLiForProject(task);
   });
+
+  localStorage.setItem("projectList", JSON.stringify(projectList));
 }
 
 function checkIndexTask(text) {
@@ -176,6 +198,7 @@ function changeTaskStatus() {
   obj.checked = !obj.checked;
 
   checkLi(obj, this);
+  localStorage.setItem("inboxTaskList", JSON.stringify(inboxTaskList));
 }
 
 function changeTaskProjectStatus() {
@@ -185,6 +208,7 @@ function changeTaskProjectStatus() {
   obj.checked = !obj.checked;
 
   checkLi(obj, this);
+  localStorage.setItem("projectList", JSON.stringify(projectList));
 }
 
 function deleteTask() {
@@ -213,6 +237,7 @@ function modTask() {
   const index = checkIndexTask(text);
   const obj = inboxTaskList[index];
   modObj = obj;
+  console.log(obj);
 
   const name = obj.getName();
   const date = obj.getDate();

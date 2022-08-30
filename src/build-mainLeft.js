@@ -1,12 +1,11 @@
 import { duplicateInArray } from "./build-web";
 import generateToday from "./today";
 import {
+  Task,
   generateInbox,
   generatePage,
-  removeHandlerInbox,
   removeHandlerProject,
   loadInboxTasks,
-  loadProjectTasks,
   setCurrentProj,
   deleteProjectRigth,
 } from "./build-mainRight";
@@ -23,12 +22,6 @@ const projectCancelBtn = document.querySelector(".add-project-popup .btn-cancel"
 const projectAddBtn = document.querySelector(".add-project-popup .btn-add");
 const projectInput = document.querySelector("#project-name");
 
-/*
-Use the obj.projectName as a "key" for load the page 
-of the tasks list
-*/
-export const projectList = [];
-
 class Project {
   constructor(name) {
     this.projectName = name;
@@ -37,6 +30,10 @@ class Project {
 
   addTask(task) {
     this.taskList.push(task);
+  }
+
+  changeList(newList) {
+    this.taskList = newList;
   }
 
   getProjName() {
@@ -50,6 +47,42 @@ class Project {
   getObj() {
     return this;
   }
+}
+
+/*
+Use the obj.projectName as a "key" for load the page 
+of the tasks list
+*/
+
+export const projectList = existLocalStorageProject();
+
+function existLocalStorageProject() {
+  let check = JSON.parse(localStorage.getItem("projectList")) ?? [];
+
+  if (localStorage.hasOwnProperty("projectList") && check !== []) {
+    check = JSON.parse(localStorage.getItem("projectList")).map((proj) =>
+      Object.assign(new Project(), proj)
+    );
+
+    /*
+    This is for change every task, in an object, with all the method, like getName()...
+    whn we take the obj from the localStorage
+    */
+    check.forEach((proj) => {
+      const list = proj.getList();
+      const newList = [];
+
+      for (let task of list) {
+        const obj = Object.assign(new Task(), task);
+
+        newList.push(obj);
+      }
+
+      proj.changeList(newList);
+    });
+  }
+
+  return check;
 }
 
 function addProjectPopup() {
@@ -67,6 +100,7 @@ function addProjectPopup() {
 
     projectList.push(myProject);
     createNewLi(myProject);
+    localStorage.setItem("projectList", JSON.stringify(projectList));
   }
 }
 
@@ -87,15 +121,7 @@ function deleteProject(e) {
   tasks.innerHTML = "";
   loadProjects();
   deleteProjectRigth();
-
-  /*FIXME: occhio che quando ci saranno poi i task
-  all'interno del progetto, dovranno
-  essere eliminati in automatico anch'essi*/
-
-  /*TODO: Quando elimini il progetto, poi il rigth main
-  dalgi un innerText vuoto o robe così
-  altrimenti fallo andare su inbox,o boh, quel che ti pare
-  */
+  localStorage.setItem("projectList", JSON.stringify(projectList));
 }
 
 function createNewLi(name) {
